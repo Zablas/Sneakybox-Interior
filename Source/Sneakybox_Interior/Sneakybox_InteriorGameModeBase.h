@@ -13,5 +13,8 @@ UCLASS()
 class SNEAKYBOX_INTERIOR_API ASneakybox_InteriorGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
+
+public:
+	virtual void BeginPlay() override;
 	
 };
