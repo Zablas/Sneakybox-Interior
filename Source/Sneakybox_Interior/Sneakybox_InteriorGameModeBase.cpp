@@ -10,7 +10,7 @@ void ASneakybox_InteriorGameModeBase::BeginPlay()
 	auto controller = GetWorld()->GetFirstPlayerController();
 	if(controller)
 	{
-		controller->SetInputMode(FInputModeUIOnly());
+		controller->SetInputMode(FInputModeGameAndUI());
 		controller->SetShowMouseCursor(true);
 	}
 }
