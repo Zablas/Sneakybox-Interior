@@ -13,5 +13,9 @@ UCLASS()
 class SNEAKYBOX_INTERIOR_API AMainPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+
+public:
+	virtual void SetupInputComponent() override;
+
+	void GetClickedActor();
 };
