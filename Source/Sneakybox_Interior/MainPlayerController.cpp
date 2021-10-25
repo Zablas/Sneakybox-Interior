@@ -16,6 +16,7 @@ void AMainPlayerController::GetClickedActor()
 	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
 	if(success)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Actor name: %s"), *hitResult.Actor->GetName());
+		auto furniture = Cast<AFurniture>(hitResult.Actor);
+		if(furniture) SelectedFurniture = furniture;
 	}
 }
