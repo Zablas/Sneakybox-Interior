@@ -7,7 +7,18 @@ void AMainPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	InputComponent->BindAction("MouseClick", IE_Pressed, this, &AMainPlayerController::GetClickedActor);
+	InputComponent->BindAction("MouseClick", IE_Pressed, this, &AMainPlayerController::DetermineClickLogic);
+}
+
+AMainPlayerController::AMainPlayerController()
+{
+	bIsSelectMode = true;
+}
+
+void AMainPlayerController::DetermineClickLogic()
+{
+	if(bIsSelectMode) GetClickedActor();
+	else PlaceActor();
 }
 
 void AMainPlayerController::GetClickedActor()
@@ -16,6 +27,11 @@ void AMainPlayerController::GetClickedActor()
 	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
 	if(success)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Actor name: %s"), *hitResult.Actor->GetName());
+		auto furniture = Cast<AFurniture>(hitResult.Actor);
+		if(furniture) SelectedFurniture = furniture;
 	}
+}
+
+void AMainPlayerController::PlaceActor()
+{
 }
