@@ -36,8 +36,5 @@ void AMainPlayerController::PlaceActor()
 {
 	FHitResult hitResult;
 	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
-	if(success)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PASPAUSTA VIETA: %s"), *hitResult.Location.ToString())
-	}
+	if(success) PlaceFurnitureAtClickLocation(hitResult.Location);
 }
