@@ -34,4 +34,7 @@ void AMainPlayerController::GetClickedActor()
 
 void AMainPlayerController::PlaceActor()
 {
+	FHitResult hitResult;
+	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
+	if(success) PlaceFurnitureAtClickLocation(hitResult.Location);
 }

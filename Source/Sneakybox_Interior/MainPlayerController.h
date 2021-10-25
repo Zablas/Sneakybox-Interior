@@ -25,6 +25,10 @@ public:
 	virtual void SetupInputComponent() override;
 
 	AMainPlayerController();
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlaceFurnitureAtClickLocation(const FVector& Location);
+	
 	void DetermineClickLogic();
 	void GetClickedActor();
 	void PlaceActor();
