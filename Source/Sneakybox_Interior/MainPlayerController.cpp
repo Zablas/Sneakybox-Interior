@@ -7,7 +7,18 @@ void AMainPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	InputComponent->BindAction("MouseClick", IE_Pressed, this, &AMainPlayerController::GetClickedActor);
+	InputComponent->BindAction("MouseClick", IE_Pressed, this, &AMainPlayerController::DetermineClickLogic);
+}
+
+AMainPlayerController::AMainPlayerController()
+{
+	bIsSelectMode = true;
+}
+
+void AMainPlayerController::DetermineClickLogic()
+{
+	if(bIsSelectMode) GetClickedActor();
+	else PlaceActor();
 }
 
 void AMainPlayerController::GetClickedActor()
@@ -19,4 +30,8 @@ void AMainPlayerController::GetClickedActor()
 		auto furniture = Cast<AFurniture>(hitResult.Actor);
 		if(furniture) SelectedFurniture = furniture;
 	}
+}
+
+void AMainPlayerController::PlaceActor()
+{
 }
