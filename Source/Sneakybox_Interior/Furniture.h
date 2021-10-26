@@ -16,7 +16,13 @@ public:
 	AFurniture();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Rendering")
+	USceneComponent* CustomRoot;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Rendering")
 	UStaticMeshComponent* Mesh;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Rendering")
+	UStaticMeshComponent* Outline;
 
 protected:
 	// Called when the game starts or when spawned
