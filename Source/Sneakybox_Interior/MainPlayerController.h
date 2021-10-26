@@ -7,9 +7,14 @@
 #include "GameFramework/PlayerController.h"
 #include "MainPlayerController.generated.h"
 
-/**
- * 
- */
+UENUM()
+enum class EMode : uint8
+{
+	SELECT UMETA(DisplayName = "SELECT"),
+	PLACE UMETA(DisplayName = "PLACE"),
+	COLOR UMETA(DisplayName = "COLOR")
+};
+
 UCLASS()
 class SNEAKYBOX_INTERIOR_API AMainPlayerController : public APlayerController
 {
@@ -20,7 +25,7 @@ public:
 	AFurniture* SelectedFurniture;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Logic")
-	bool bIsSelectMode;
+	EMode Mode;
 	
 	virtual void SetupInputComponent() override;
 
@@ -28,6 +33,9 @@ public:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void PlaceFurnitureAtClickLocation(const FVector& Location);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void FocusMouseOnColorWheel();
 	
 	void DetermineClickLogic();
 	void GetClickedActor();
