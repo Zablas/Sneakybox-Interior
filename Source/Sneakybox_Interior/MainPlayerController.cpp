@@ -12,13 +12,23 @@ void AMainPlayerController::SetupInputComponent()
 
 AMainPlayerController::AMainPlayerController()
 {
-	bIsSelectMode = true;
+	Mode = EMode::SELECT;
 }
 
 void AMainPlayerController::DetermineClickLogic()
 {
-	if(bIsSelectMode) GetClickedActor();
-	else PlaceActor();
+	switch (Mode)
+	{
+	case EMode::SELECT:
+		GetClickedActor();
+		break;
+	case EMode::PLACE:
+		PlaceActor();
+		break;
+	case EMode::COLOR:
+		FocusMouseOnColorWheel();
+		break;
+	}
 }
 
 void AMainPlayerController::GetClickedActor()
