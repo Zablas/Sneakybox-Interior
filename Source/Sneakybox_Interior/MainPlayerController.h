@@ -35,7 +35,7 @@ public:
 	void PlaceFurnitureAtClickLocation(const FVector& Location);
 
 	UFUNCTION(BlueprintImplementableEvent)
-	void FocusMouseOnColorWheel();
+	void CloseColorWheel();
 	
 	void DetermineClickLogic();
 	void GetClickedActor();

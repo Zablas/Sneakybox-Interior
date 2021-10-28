@@ -26,7 +26,7 @@ void AMainPlayerController::DetermineClickLogic()
 		PlaceActor();
 		break;
 	case EMode::COLOR:
-		FocusMouseOnColorWheel();
+		CloseColorWheel();
 		break;
 	}
 }
