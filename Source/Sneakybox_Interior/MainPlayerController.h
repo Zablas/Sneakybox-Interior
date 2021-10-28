@@ -38,6 +38,7 @@ public:
 	void CloseColorWheel();
 	
 	void DetermineClickLogic();
+	void DetermineReleaseLogic();
 	void GetClickedActor();
 	void PlaceActor();
 };
