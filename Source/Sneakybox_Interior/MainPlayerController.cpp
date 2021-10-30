@@ -21,8 +21,7 @@ void AMainPlayerController::Tick(float DeltaSeconds)
 		FVector WorldDirection;
 		DeprojectMousePositionToWorld(WorldLocation, WorldDirection);
 		WorldDirection *= DistanceToComponent;
-		const FTransform TransformToSet(WorldLocation + WorldDirection);
-		GrabbedComponent->SetWorldLocation(TransformToSet.InverseTransformVector(RelativeGrabLocation));
+		MoveActor(WorldLocation, WorldDirection);
 	}
 }
 
@@ -43,7 +42,7 @@ void AMainPlayerController::DetermineClickLogic()
 		PlaceActor();
 		break;
 	case EMode::MOVE:
-		MoveActor();
+		CalculateActorMovementProperties();
 		break;
 	default:
 		break;
@@ -83,9 +82,8 @@ void AMainPlayerController::PlaceActor()
 	if(success) PlaceFurnitureAtClickLocation(hitResult.Location);
 }
 
-void AMainPlayerController::MoveActor()
+void AMainPlayerController::CalculateActorMovementProperties()
 {
-	SetShowMouseCursor(true);
 	FHitResult hitResult;
 	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
 	if(success)
@@ -98,7 +96,7 @@ void AMainPlayerController::MoveActor()
 			{
 				GrabbedComponent = component.Get();
 				DistanceToComponent = hitResult.Distance;
-				RelativeGrabLocation = GrabbedComponent->GetComponentTransform().InverseTransformVector(hitResult.Location);
+				SetGrabbedLocation(hitResult.Location);
 			}
 			ToggleActorOutline(furniture);
 		}
