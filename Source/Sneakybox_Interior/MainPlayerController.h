@@ -12,7 +12,8 @@ enum class EMode : uint8
 {
 	SELECT UMETA(DisplayName = "SELECT"),
 	PLACE UMETA(DisplayName = "PLACE"),
-	COLOR UMETA(DisplayName = "COLOR")
+	COLOR UMETA(DisplayName = "COLOR"),
+	MOVE UMETA(DisplayName = "MOVE")
 };
 
 UCLASS()
