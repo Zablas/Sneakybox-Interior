@@ -26,6 +26,9 @@ void AMainPlayerController::DetermineClickLogic()
 	case EMode::PLACE:
 		PlaceActor();
 		break;
+	case EMode::MOVE:
+		MoveActor();
+		break;
 	default:
 		break;
 	}
@@ -33,7 +36,17 @@ void AMainPlayerController::DetermineClickLogic()
 
 void AMainPlayerController::DetermineReleaseLogic()
 {
-	if(Mode == EMode::COLOR) CloseColorWheel();
+	switch (Mode)
+	{
+	case EMode::COLOR:
+		CloseColorWheel();
+		break;
+	case EMode::MOVE:
+		StopMovingActor();
+		break;
+	default:
+		break;
+	}
 }
 
 void AMainPlayerController::GetClickedActor()
@@ -43,12 +56,7 @@ void AMainPlayerController::GetClickedActor()
 	if(success)
 	{
 		auto furniture = Cast<AFurniture>(hitResult.Actor);
-		if(furniture)
-		{
-			if(SelectedFurniture) SelectedFurniture->Outline->SetVisibility(false);
-			SelectedFurniture = furniture;
-			SelectedFurniture->Outline->SetVisibility(true);
-		}
+		if(furniture) ToggleActorOutline(furniture);
 	}
 }
 
@@ -57,4 +65,31 @@ void AMainPlayerController::PlaceActor()
 	FHitResult hitResult;
 	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
 	if(success) PlaceFurnitureAtClickLocation(hitResult.Location);
+}
+
+void AMainPlayerController::MoveActor()
+{
+	FHitResult hitResult;
+	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
+	if(success)
+	{
+		auto furniture = Cast<AFurniture>(hitResult.Actor);
+		if(furniture) ToggleActorOutline(furniture);
+	}
+}
+
+void AMainPlayerController::StopMovingActor()
+{
+	if(SelectedFurniture)
+	{
+		SelectedFurniture->Outline->SetVisibility(false);
+		SelectedFurniture = nullptr;
+	}
+}
+
+void AMainPlayerController::ToggleActorOutline(AFurniture* furniture)
+{
+	if(SelectedFurniture) SelectedFurniture->Outline->SetVisibility(false);
+	SelectedFurniture = furniture;
+	SelectedFurniture->Outline->SetVisibility(true);
 }

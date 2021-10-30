@@ -42,4 +42,7 @@ public:
 	void DetermineReleaseLogic();
 	void GetClickedActor();
 	void PlaceActor();
+	void MoveActor();
+	void StopMovingActor();
+	void ToggleActorOutline(AFurniture* furniture);
 };
