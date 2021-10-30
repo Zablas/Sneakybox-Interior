@@ -8,6 +8,7 @@ void AMainPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	InputComponent->BindAction("MouseClick", IE_Pressed, this, &AMainPlayerController::DetermineClickLogic);
+	InputComponent->BindAction("MouseClick", IE_Released, this, &AMainPlayerController::DetermineReleaseLogic);
 }
 
 AMainPlayerController::AMainPlayerController()
@@ -25,10 +26,14 @@ void AMainPlayerController::DetermineClickLogic()
 	case EMode::PLACE:
 		PlaceActor();
 		break;
-	case EMode::COLOR:
-		FocusMouseOnColorWheel();
+	default:
 		break;
 	}
+}
+
+void AMainPlayerController::DetermineReleaseLogic()
+{
+	if(Mode == EMode::COLOR) CloseColorWheel();
 }
 
 void AMainPlayerController::GetClickedActor()
