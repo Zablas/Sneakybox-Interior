@@ -21,6 +21,12 @@ class SNEAKYBOX_INTERIOR_API AMainPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
+	UPROPERTY()
+	UPrimitiveComponent* GrabbedComponent;
+	
+	float DistanceToComponent;
+	FVector RelativeGrabLocation;
+	
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Design")
 	AFurniture* SelectedFurniture;
@@ -29,6 +35,7 @@ public:
 	EMode Mode;
 	
 	virtual void SetupInputComponent() override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	AMainPlayerController();
 	

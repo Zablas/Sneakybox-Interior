@@ -11,8 +11,24 @@ void AMainPlayerController::SetupInputComponent()
 	InputComponent->BindAction("MouseClick", IE_Released, this, &AMainPlayerController::DetermineReleaseLogic);
 }
 
+void AMainPlayerController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if(Mode == EMode::MOVE && GrabbedComponent)
+	{
+		FVector WorldLocation;
+		FVector WorldDirection;
+		DeprojectMousePositionToWorld(WorldLocation, WorldDirection);
+		WorldDirection *= DistanceToComponent;
+		const FTransform TransformToSet(WorldLocation + WorldDirection);
+		GrabbedComponent->SetWorldLocation(TransformToSet.InverseTransformVector(RelativeGrabLocation));
+	}
+}
+
 AMainPlayerController::AMainPlayerController()
 {
+	PrimaryActorTick.bCanEverTick = true;
 	Mode = EMode::SELECT;
 }
 
@@ -69,12 +85,23 @@ void AMainPlayerController::PlaceActor()
 
 void AMainPlayerController::MoveActor()
 {
+	SetShowMouseCursor(true);
 	FHitResult hitResult;
 	auto success = GetHitResultUnderCursor(ECC_Visibility, true, hitResult);
 	if(success)
 	{
 		auto furniture = Cast<AFurniture>(hitResult.Actor);
-		if(furniture) ToggleActorOutline(furniture);
+		if(furniture)
+		{
+			auto component = hitResult.Component;
+			if(component->Mobility == EComponentMobility::Movable)
+			{
+				GrabbedComponent = component.Get();
+				DistanceToComponent = hitResult.Distance;
+				RelativeGrabLocation = GrabbedComponent->GetComponentTransform().InverseTransformVector(hitResult.Location);
+			}
+			ToggleActorOutline(furniture);
+		}
 	}
 }
 
@@ -84,6 +111,7 @@ void AMainPlayerController::StopMovingActor()
 	{
 		SelectedFurniture->Outline->SetVisibility(false);
 		SelectedFurniture = nullptr;
+		GrabbedComponent = nullptr;
 	}
 }
 
