@@ -10,7 +10,13 @@ void ASneakybox_InteriorGameModeBase::BeginPlay()
 	auto controller = GetWorld()->GetFirstPlayerController();
 	if(controller)
 	{
-		controller->SetInputMode(FInputModeGameAndUI());
+		FInputModeGameAndUI inputMode;
+		inputMode.SetHideCursorDuringCapture(false);
+		inputMode.SetLockMouseToViewportBehavior(EMouseLockMode::LockInFullscreen);
+		controller->SetInputMode(inputMode);
+		
 		controller->SetShowMouseCursor(true);
+		controller->SetIgnoreMoveInput(true);
+		controller->SetIgnoreLookInput(true);
 	}
 }

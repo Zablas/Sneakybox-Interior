@@ -1,5 +1,5 @@
 # Sneakybox-Interior
-An interior editing simulating made as a recruitment task for Sneakybox.
+An interior editing simulating made as a recruitment task for Sneakybox made in Unreal Engine 4.27.
 
 # Features
 * Place furniture (3 different primitives)
