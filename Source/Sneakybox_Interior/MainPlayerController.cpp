@@ -72,6 +72,11 @@ void AMainPlayerController::GetClickedActor()
 	{
 		auto furniture = Cast<AFurniture>(hitResult.Actor);
 		if(furniture) ToggleActorOutline(furniture);
+		else if(SelectedFurniture)
+		{
+			SelectedFurniture->Outline->SetVisibility(false);
+			SelectedFurniture = nullptr;
+		}
 	}
 }
 
